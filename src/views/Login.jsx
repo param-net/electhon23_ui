@@ -227,7 +227,6 @@ class Login extends Component {
         <div className="content">
           <div className='imageContainer2'>
             <div className="image3"></div>
-            {/* <div className="image4"></div> */}
           </div>
           <div className="header">
             <h2 className='header-text'>Welcome to Digital Ink </h2>
