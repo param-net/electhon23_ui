@@ -1,0 +1,6 @@
+{
+  "api-services": "http://141.148.207.162:8000/",
+  "endpoints": {
+      "getAllCandidates": "candidates"
+  }
+}
