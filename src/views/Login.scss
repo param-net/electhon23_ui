@@ -1,0 +1,352 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  max-width: 100%;
+}
+
+.logo {
+  max-width: 80px;
+  margin-right: 10px;
+}
+
+.header {
+  display: flex;
+  //align-items: center;
+  //margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+ // flex-grow: 1;
+}
+
+.tab-header {
+  display: flex;
+ // justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tab {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 15px;
+  //border-radius: 5px 5px 0 0;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.tab.active {
+  background-color: #fff;
+ // border-bottom: 1px solid #fff;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+}
+
+button[type="submit"] {
+  padding: 10px 15px;
+  background-color: rgb(29 27 197 / 74%);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color:rgba(103, 102, 171, 0.74);
+}
+.footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.radio-options {
+  display: flex;
+  flex-direction: row;
+  margin: .5rem;
+  
+}
+
+.radio-option {
+  display: flex;
+  flex-direction: row;
+  //padding: .1rem 1rem .1rem 1rem;
+  padding: .1rem 1rem .1rem 0rem;
+}
+
+.radio-label {
+  padding-left: .5rem;
+  padding-top: 0.3rem;
+}
+
+.submit-btn-custom {
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  margin: 0.5rem 1rem 0.5rem 1rem;
+  width: 100%;
+  font-size: 14px !important;
+  background-color: rgb(29 27 197 / 74%);
+}
+
+.submit-btn-custom :hover{
+  background-color:rgba(123, 121, 212, 0.74);
+}
+
+.header-text {
+  font-size: 24px;
+    font-weight: 500;
+    font-family: ui-rounded;
+    padding-top: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .imageContainer {
+   display: none;
+  }
+  
+  .image2 {
+   display: none;
+  }
+
+  .image1 {
+    display: none;
+  }
+
+  .imageContainer2 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 300px;
+   }
+   
+   .image3 {
+    background-image: url('../assets/img/hackathon.png');
+    background-size: cover;
+    width: 100%;
+    height: 300px;
+    margin: 5% 0% 0% 0%;
+    padding: 0% 0% 0% 0%;
+    background-repeat: no-repeat;
+   }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .tab-body {
+    overflow-y: scroll;
+  }
+ 
+}
+
+@media only screen and (min-width: 600px) {
+
+  .imageContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+  }
+ 
+  .image1 {
+    background-image: url('../assets/img/hackathon.png');
+    background-size: cover;
+    width: 90%;
+    height: 70%;
+    margin: 5% 0% 0% 2%;
+    padding: 0% 0% 0% 0%;
+  }
+
+  .image2 {
+    background-image:  url('../assets/img/hackathonLogo.png');
+    background-size: cover;
+    width: 90%;
+    height: 24%;
+    background-repeat: no-repeat;
+    padding: 0% 0% 0% 0%;
+    margin: 2% 0% 0% 2%;
+  }
+
+  .imageContainer2 {
+    display: none;
+   }
+   
+   .image3 {
+    display: none;
+   }
+ 
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
+    padding: 20px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+ 
+  .imageContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+  }
+ 
+  .image1 {
+    background-image: url('../assets/img/hackathon.png');
+    background-size: cover;
+    width: 90%;
+    height: 70%;
+    margin: 5% 0% 0% 2%;
+    padding: 0% 0% 0% 0%;
+  }
+
+  .image2 {
+    background-image:  url('../assets/img/hackathonLogo.png');
+    background-size: cover;
+    width: 90%;
+    height: 24%;
+    background-repeat: no-repeat;
+    padding: 0% 0% 0% 0%;
+    margin: 2% 0% 0% 2%;
+  } 
+
+  .imageContainer2 {
+    display: none;
+   }
+   
+   .image3 {
+    display: none;
+   }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .imageContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+  }
+ 
+  .image1 {
+    background-image: url('../assets/img/hackathon.png');
+    background-size: cover;
+    width: 90%;
+    height: 70%;
+    margin: 5% 0% 0% 2%;
+    padding: 0% 0% 0% 0%;
+  }
+
+  .image2 {
+    background-image:  url('../assets/img/hackathonLogo.png');
+    background-size: cover;
+    width: 90%;
+    height: 24%;
+    background-repeat: no-repeat;
+    padding: 0% 0% 0% 0%;
+    margin: 2% 0% 0% 2%;
+  }
+
+  .imageContainer2 {
+    display: none;
+   }
+   
+   .image3 {
+    display: none;
+   }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    padding: 20px;
+  }
+  
+
+}
+
+@media only screen and (min-width: 1200px) {
+  .imageContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+  }
+ 
+  .image1 {
+    background-image: url('../assets/img/hackathon.png');
+    background-size: cover;
+    width: 90%;
+    height: 70%;
+    margin: 5% 0% 0% 2%;
+    padding: 0% 0% 0% 0%;
+  }
+
+  .image2 {
+    background-image:  url('../assets/img/hackathonLogo.png');
+    background-size: cover;
+    width: 90%;
+    height: 24%;
+    background-repeat: no-repeat;
+    padding: 0% 0% 0% 0%;
+    margin: 2% 0% 0% 2%;
+  }
+
+  .imageContainer2 {
+    display: none;
+   }
+   
+   .image3 {
+    display: none;
+   }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    padding: 20px;
+  }
+ 
+
+}

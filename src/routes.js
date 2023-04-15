@@ -16,6 +16,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import Login from "views/Login";
 import Dashboard from "views/Dashboard.js";
 import Notifications from "views/Notifications.js";
 import Icons from "views/Icons.js";
@@ -26,6 +27,13 @@ import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-login",
+    component: Login,
+    layout: "/login"
+  },
   {
     path: "/dashboard",
     name: "Dashboard",
