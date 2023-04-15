@@ -18,19 +18,23 @@ class User extends React.Component {
             selectedCandidate: {},
             isModalOpen: false,
             selectedCandidateIndex: 0,
-            isVoteModalOpen: false
+            isVoteModalOpen: false,
+            disableVote: false
         }
         this.notificationAlert = React.createRef();
     }
 
     componentDidMount() {
+        let profile = JSON.parse(localStorage.getItem("profile"))
+        let disableVote = profile && profile.isVoted ? profile.isVoted : false
         return this.getCandidates().then(result => {
             if (!result && !result.message) {
                 this.notify('tr', "Unable to get the candidates", 3)
                 return Promise.reject("Unable to get the candidates")
             }
             this.setState({
-                candidateDetails: result.message
+                candidateDetails: result.message,
+                disableVote
             })
             return;
         })
@@ -60,14 +64,22 @@ class User extends React.Component {
     }
 
     voteCandidate = (index) => {
-        const { candidateDetails } = this.state;
-        let candidate = candidateDetails[index] || {}
-        console.log("Voted for the Candidate ", candidate.name)
+        let profile = JSON.parse(localStorage.getItem("profile"))
+        let address = profile && profile.address ? profile.address : ""
+        let isAdminLogin = profile && profile.isAdmin ? true : false
 
         let url = `${Config['api-services']}${Config['endpoints']['vote']}`
+        /**
+         * cID
+         * offline - NA
+         * online - 2
+         */
         let body = {
-            "address": "0x181ac1208d859510116c56c3d3cbf4cf58437681",
-            "cID": 3
+            "address": address,
+            "cID": ""
+        }
+        if (!isAdminLogin) {
+            body.cID = 2
         }
         return fetch(url, {
             headers: {
@@ -82,9 +94,15 @@ class User extends React.Component {
             return Promise.reject(response.statusText)
         }).then(result => {
             if (result && result.message) {
+                this.setState({ disableVote: true })
+                let profile = JSON.parse(localStorage.getItem("profile"))
+                profile['isVoted'] = true
+                localStorage.setItem("profile", JSON.stringify(profile))
                 return this.notify('tr', "Vote Casted Successfully", 2)
             }
+            return Promise.reject("Unable to Vote")
         }).catch(err => {
+            console.error(err)
             return this.notify('tr', "Something Went Wrong", 3)
         })
     }
@@ -212,6 +230,7 @@ class User extends React.Component {
                                     className="btn-round"
                                     color="primary"
                                     onClick={() => this.voteCandidate(index)}
+                                    disabled={this.state.disableVote}
                                 >
                                     Vote
                                 </Button>
@@ -405,6 +424,7 @@ class User extends React.Component {
                                 className="btn-round"
                                 color="primary"
                                 onClick={() => this.voteCandidate(selectedCandidateIndex)}
+                                disabled={this.state.disableVote}
                             >
                                 Vote
                             </Button>
