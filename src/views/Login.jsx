@@ -187,6 +187,9 @@ class Login extends Component {
   sendOtp = (e) => {
     e.preventDefault();
     let mobileNumber = this.state.mobileNumber;
+    if (!mobileNumber || mobileNumber.length < 10) {
+      return this.notify("Invalid User Input, should be atleast 10 characters", "danger");
+    }
 
     // clear profile and on successfull verification set profile
     localStorage.removeItem("profile");
@@ -258,8 +261,11 @@ class Login extends Component {
       return res && res.json()
     }).then((res) => {
       if (res && res.status && res.message && Object.keys(res.message).length) {
-        localStorage.setItem("profile", res.message);
-        this.notify("Successfully logged In", "success")
+        localStorage.setItem("profile", JSON.stringify(res.message));
+        this.notify("Successfully logged In", "success");
+        this.props.history.push({
+          pathname: "/admin"
+        })
         return;
       } {
         this.notify("Failed to log In", "warning")
