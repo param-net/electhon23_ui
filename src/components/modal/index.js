@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 class Popup extends React.Component {
 
@@ -8,12 +8,21 @@ class Popup extends React.Component {
     }
 
     render() {
-        const { title, body, isOpen, toggle } = this.props;
+        const { title, body, isOpen, toggle, isFooterEnabled, modalConfirmed, modalCancelled } = this.props;
 
         return (
             <Modal isOpen={isOpen} toggle={toggle} size="lg">
                 <ModalHeader toggle={toggle}>{title}</ModalHeader>
                 <ModalBody>{body}</ModalBody>
+                {
+                    isFooterEnabled ?
+                        <ModalFooter>
+                            <Button color="primary" onClick={modalConfirmed}>Confirm</Button>
+                            <Button color="secondary" onClick={modalCancelled}>Cancel</Button>
+                        </ModalFooter>
+                        :
+                        <></>
+                }
             </Modal>
         )
     }

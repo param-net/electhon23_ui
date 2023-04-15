@@ -1,11 +1,13 @@
 import React from "react";
 import { Button, Card, CardHeader, CardBody, CardFooter, CardTitle, FormGroup, Form, Row, Col, Table } from "reactstrap";
-import Candidates from '../test/candidate.json';
 import Popup from '../components/modal';
 import fbLogin from '../assets/icons/nucleo-social-icons/svg/social-1_round-facebook.svg'
 import twitterLogin from '../assets/icons/nucleo-social-icons/svg/social-1_round-twitter.svg'
 import instaLogin from '../assets/icons/nucleo-social-icons/svg/social-1_round-instagram.svg'
-import './user.scss'
+import './user.scss';
+import Config from '../config.json'
+import NotificationAlert from "react-notification-alert";
+
 
 class User extends React.Component {
 
@@ -15,28 +17,105 @@ class User extends React.Component {
             candidateDetails: [],
             selectedCandidate: {},
             isModalOpen: false,
-            selectedCandidateIndex: 0
+            selectedCandidateIndex: 0,
+            isVoteModalOpen: false
         }
+        this.notificationAlert = React.createRef();
     }
 
     componentDidMount() {
-        return this.getCandidates()
+        return this.getCandidates().then(result => {
+            if (!result && !result.message) {
+                this.notify('tr', "Unable to get the candidates", 3)
+                return Promise.reject("Unable to get the candidates")
+            }
+            this.setState({
+                candidateDetails: result.message
+            })
+            return;
+        })
     }
 
     getCandidates = () => {
-        this.setState({
-            candidateDetails: Candidates
+        let url = `${Config['api-services']}${Config['endpoints']['getAllCandidates']}`
+        let body = {
+            location: "Nipani"
+        }
+        return fetch(url, {
+            headers: {
+                'Content-Type': "Application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(body)
+        }).then(response => {
+            if (response.status == 200) {
+                return response.json()
+            }
+            return Promise.reject(response.statusText)
         })
-        return;
     }
 
     voteCandidate = (index) => {
         const { candidateDetails } = this.state;
         let candidate = candidateDetails[index] || {}
         console.log("Voted for the Candidate ", candidate.name)
-        //TODO: Make API Call to vote the Candidate
-        return;
+
+        let url = `${Config['api-services']}${Config['endpoints']['vote']}`
+        let body = {
+            "address": "0x181ac1208d859510116c56c3d3cbf4cf58437681",
+            "cID": 3
+        }
+        return fetch(url, {
+            headers: {
+                'Content-Type': "Application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(body)
+        }).then(response => {
+            if (response.status == 200) {
+                return response.json()
+            }
+            return Promise.reject(response.statusText)
+        }).then(result => {
+            if (result && result.message) {
+                return this.notify('tr', "Vote Casted Successfully", 2)
+            }
+        }).catch(err => {
+            return this.notify('tr', "Something Went Wrong", 3)
+        })
     }
+
+    notify = (place, message, color) => {
+        var type;
+        switch (color) {
+            case 1:
+                type = "primary";
+                break;
+            case 2:
+                type = "success";
+                break;
+            case 3:
+                type = "danger";
+                break;
+            case 4:
+                type = "warning";
+                break;
+            case 5:
+                type = "info";
+                break;
+            default:
+                break;
+        }
+        var options = {};
+        options = {
+            place: place,
+            message: message,
+            type: type,
+            icon: "nc-icon nc-bell-55",
+            autoDismiss: 7
+        };
+        this.notificationAlert.current.notificationAlert(options);
+    };
 
     showCandidateDetails = (index) => {
         const { candidateDetails } = this.state;
@@ -52,6 +131,35 @@ class User extends React.Component {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         })
+    }
+
+    voteModal = () => {
+        this.setState({
+            isVoteModalOpen: !this.state.isVoteModalOpen
+        })
+    }
+
+    modalConfirmed = () => {
+        this.setState({
+            isVoteModalOpen: !this.state.isVoteModalOpen
+        })
+        return this.voteCandidate(this.state.selectedCandidateIndex)
+    }
+
+    modalCancelled = () => {
+        this.setState({
+            isVoteModalOpen: !this.state.isVoteModalOpen
+        })
+    }
+
+    getConfirmation = () => {
+        const { selectedCandidate } = this.state;
+
+        return (
+            <div>
+                {`Are sure you want to vote for ${selectedCandidate.name}`}
+            </div>
+        )
     }
 
     getSelectedCandidate = (index) => {
@@ -71,7 +179,7 @@ class User extends React.Component {
                             <img
                                 alt="..."
                                 className="avatar border-gray"
-                                src={require("assets/img/eci.jpg")}
+                                src={candidate.profile}
                             />
                             <div onClick={() => this.showCandidateDetails(index)}>
                                 <h5 className="title">
@@ -112,29 +220,90 @@ class User extends React.Component {
         )
     }
 
-    getCandidateAgendaOrExperience = (type) => {
+    getTableHeaders = (type) => {
+        switch (type) {
+            case "experience":
+                return (
+                    <tr>
+                        <th>Position</th>
+                        <th>Period</th>
+                    </tr>
+                )
+            case "agenda":
+                return (
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                    </tr>
+                )
+            case "assets":
+                return (
+                    <tr>
+                        <th>Property Type</th>
+                        <th>Property Value</th>
+                        <th>Street Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zip</th>
+                    </tr>
+                )
+        }
+    }
+
+    getTableData = (type, value) => {
+        switch (type) {
+            case "experience":
+                return (
+                    <tr>
+                        <td>{value.position}</td>
+                        <td>{`${value.from} - ${value.to}`}</td>
+                    </tr>
+                )
+            case "agenda":
+                return (
+                    <tr>
+                        <td>{value.issue}</td>
+                        <td><div dangerouslySetInnerHTML={{ __html: `<p>${value.position}</p>` }}></div></td>
+                    </tr>
+                )
+            case "assets":
+                return (
+                    <tr>
+                        <td>{value.type}</td>
+                        <td>{value.value}</td>
+                        <td>{value.address.street}</td>
+                        <td>{value.address.city}</td>
+                        <td>{value.address.state}</td>
+                        <td>{value.address.zip}</td>
+                    </tr>
+                )
+        }
+    }
+
+    viewCandidateDetails = (type) => {
         const { selectedCandidate } = this.state;
         const experience = selectedCandidate.experience || []
         const agenda = selectedCandidate.agenda || []
+        const assets = selectedCandidate.assets && selectedCandidate.assets.real_estate ? selectedCandidate.assets.real_estate : []
         let obj = {}
         if (type == "experience") {
             obj = experience
         } else if (type == "agenda") {
             obj = agenda
+        } else if (type == "assets") {
+            obj = assets
+        }
+        if (!Object.keys(obj).length) {
+            if (type == "experience") {
+                return <div>{"New Candidate"}</div>
+            }
+            return <div>{"-"}</div>
         }
         return (
             <Table>
                 <thead className="text-primary">
                     {
-                        type == "experience" ?
-                            <tr>
-                                <th>Position</th>
-                                <th>Period</th>
-                            </tr>
-                            : <tr>
-                                <th>Issue</th>
-                                <th>Position</th>
-                            </tr>
+                        this.getTableHeaders(type)
                     }
                 </thead>
                 <tbody>
@@ -144,22 +313,17 @@ class User extends React.Component {
                                 if (!value || !value.position || !value.from || !value.to) {
                                     return <></>;
                                 }
-                                return (
-                                    <tr>
-                                        <td>{value.position}</td>
-                                        <td>{`${value.from} - ${value.to}`}</td>
-                                    </tr>
-                                )
+                                return this.getTableData(type, value)
                             } else if (type == "agenda") {
                                 if (!value || !value.issue || !value.position) {
                                     return <></>;
                                 }
-                                return (
-                                    <tr>
-                                        <td>{value.issue}</td>
-                                        <td>{value.position}</td>
-                                    </tr>
-                                )
+                                return this.getTableData(type, value)
+                            } else if (type == "assets") {
+                                if (!value) {
+                                    return <></>;
+                                }
+                                return this.getTableData(type, value)
                             }
                         })
                     }
@@ -197,15 +361,37 @@ class User extends React.Component {
                         <Col className="pr-1" md="12">
                             <FormGroup>
                                 <label className="label-key">Experience</label>
-                                {this.getCandidateAgendaOrExperience("experience")}
+                                {this.viewCandidateDetails("experience")}
                             </FormGroup>
                         </Col>
                     </Row>
                     <Row>
                         <Col className="pr-1" md="12">
                             <FormGroup>
-                                <label className="label-key">Agenda</label>
-                                {this.getCandidateAgendaOrExperience("agenda")}
+                                <label className="label-key">Manifesto</label>
+                                {this.viewCandidateDetails("agenda")}
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="pr-1" md="4">
+                            <FormGroup>
+                                <label className="label-key">Cash</label>
+                                <p>{selectedCandidate.assets && selectedCandidate.assets.cash ? selectedCandidate.assets.cash : ""}</p>
+                            </FormGroup>
+                        </Col>
+                        <Col className="px-1" md="4">
+                            <FormGroup>
+                                <label className="label-key">Investments</label>
+                                <p>{selectedCandidate.assets && selectedCandidate.assets.investments ? selectedCandidate.assets.investments : ""}</p>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="pr-1" md="12">
+                            <FormGroup>
+                                <label className="label-key">Assets</label>
+                                {this.viewCandidateDetails("assets")}
                             </FormGroup>
                         </Col>
                     </Row>
@@ -257,12 +443,22 @@ class User extends React.Component {
     render() {
         return (
             <>
+                <NotificationAlert ref={this.notificationAlert} />
                 {this.getAllCandidates()}
                 <Popup
                     toggle={this.toggle}
                     title={this.state.selectedCandidate.name}
                     body={this.getSelectedCandidateProfileDetails()}
                     isOpen={this.state.isModalOpen}
+                />
+                <Popup
+                    toggle={this.voteModal}
+                    title={this.state.selectedCandidate.name}
+                    body={this.getConfirmation()}
+                    isOpen={this.state.isVoteModalOpen}
+                    isFooterEnabled={true}
+                    modalConfirmed={this.modalConfirmed}
+                    modalCancelled={this.modalCancelled}
                 />
             </>
         )
