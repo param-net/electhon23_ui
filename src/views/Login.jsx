@@ -37,11 +37,21 @@ class Login extends Component {
     this.notificationAlert = React.createRef();
   }
 
+  componentDidMount() {
+    let profile = localStorage.getItem('profile');
+    profile = profile && JSON.parse(profile);
+    if (profile && Object.keys(profile).length) {
+      this.props.history.push({
+        pathname: '/profile'
+      })
+    }
+  }
+
   notify = (message, color) => {
     if (!message || !color) {
       return;
     }
-    var color = Math.floor(Math.random() * 5 + 1);
+    var color = color;
     var type = "primary";
     switch (color) {
       case 1:
@@ -208,6 +218,7 @@ class Login extends Component {
       if (res && res.status) {
         this.notify(res && res.message, "success")
         this.setState({ otpSent: true })
+        return
       } {
         this.notify(res && res.message, "warning")
         return;
@@ -393,7 +404,7 @@ class Login extends Component {
           this.state.otpSent ?
             <FormGroup>
               <label>OTP</label>
-              <Input type="text" id="otp" name="otp" required onChange={this.handleInputChange} value={this.state.otp} />
+              <Input type="password" id="otp" name="otp" required onChange={this.handleInputChange} value={this.state.otp} />
             </FormGroup>
             :
             <></>
@@ -403,7 +414,7 @@ class Login extends Component {
           <Button
             className="btn-round submit-btn-custom"
             color="primary"
-            type="submit"
+          // type="submit"
           >
             {this.state.otpSent ? "Verify OTP" : "Send OTP"}
           </Button>
@@ -424,7 +435,7 @@ class Login extends Component {
           this.state.otpSent ?
             <FormGroup>
               <label>OTP</label>
-              <Input type="text" id="otp" name="otp" required onChange={this.handleInputChange} value={this.state.otp} />
+              <Input type="password" id="otp" name="otp" required onChange={this.handleInputChange} value={this.state.otp} />
             </FormGroup>
             :
             <></>
@@ -433,7 +444,7 @@ class Login extends Component {
           <Button
             className="btn-round submit-btn-custom"
             color="primary"
-            type="submit"
+          // type="submit"
           >
             {this.state.otpSent ? "Verify OTP" : "Send OTP"}
           </Button>

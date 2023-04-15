@@ -34,6 +34,7 @@ import {
 } from "reactstrap";
 import QRCode from "react-qr-code";
 import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -41,19 +42,21 @@ class Profile extends React.Component {
 
     this.state = {
       profile: {
-        "_id": "615866165332",
-        "name": "Pujya Kumar",
-        "soName": "Shishir Kumar",
-        "pAddress": "Door no:15, Opp. Dhobighat, near OG Varier Bakery, 3rd Block, Rajajinagar, Bengaluru, Karnataka-560010",
-        "idProof": "HLKPK7900M",
-        "idType": "aadhar",
-        "address": "0x6445b50dd4458924a53831882648e00a7db0eab1",
-        "privateKey": "0x1ce54f539f25be05fb7ae2809058af8fdd283cea9e2eb214d726e27b606192f8",
-        "mobileNumber": "5866165332",
-        "isVerified": false,
-        "location": "Rajaji Nagar"
-      }
-
+        "_id": "",
+        "name": "",
+        "soName": "",
+        "pAddress": "",
+        "idProof": "",
+        "idType": "",
+        "address": "",
+        "privateKey": "",
+        "mobileNumber": "",
+        "isVerified": "",
+        "isVoted": false,
+        "location": "",
+        "epicNumber": ""
+      },
+      copiedDigitalInk: ""
     }
 
 
@@ -68,91 +71,133 @@ class Profile extends React.Component {
     this.setState({ profile })
   }
 
+  updateDigitalInk = (digitalInk) => {
+    if (!digitalInk) {
+      return
+    }
+    this.setState({ copiedDigitalInk: digitalInk });
+  }
+
   render() {
     return (
       <>
         <div className="content">
-          <Row>
-            <Col md="4">
-              <Card className="card-user">
-                <CardBody style={{ padding: "50px" }}>
-                  <QRCodeSVG
-                    value={this.state.address}
-                    size={256}
-                    style={{ height: "100%", maxWidth: "100%", width: "100%" }}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="button-container digitalInk">
-                    DigitalInk
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col md="8">
-              <Card className="card-user">
-                <CardHeader>
-                  <CardTitle tag="h5">Profile</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Form>
-                    <Row>
-                      <Col className="px-3">
-                        <FormGroup>
-                          <label className="label-key">{this.state.profile.idType === "aadhar" ? "Aadhar" : 'EPIC'} Number</label>
-                          <p className="p-value">{this.state.profile._id}</p>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="px-3">
-                        <FormGroup>
-                          <label className="label-key">Name</label>
-                          <p className="p-value">{this.state.profile.name}</p>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="px-3">
-                        <FormGroup>
-                          <label className="label-key">
-                            S.O. Name
-                          </label>
-                          <p className="p-value">{this.state.profile.soName}</p>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="px-3">
-                        <FormGroup>
-                          <label className="label-key">ID Proof</label>
-                          <p className="p-value">{this.state.profile.idProof} </p>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="px-3">
-                        <FormGroup>
-                          <label className="label-key">Mobile Number</label>
-                          <p className="p-value">
-                            {this.state.profile.mobileNumber}
-                          </p>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="px-3">
-                        <FormGroup>
-                          <label className="label-key">Address</label>
-                          <p className="p-value">{this.state.profile.pAddress}</p>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </Form>
-                </CardBody>
-              </Card>
-            </Col>
+          <Row style={{ width: "100%" }}>
+            <Card className="card-user card-user-profile">
+              <CardHeader>
+                <CardTitle tag="h5"></CardTitle>
+              </CardHeader>
+              <CardBody>
+                <Form>
+                  <Row>
+                    <Col md="8">
+                      <Row>
+                        <Col className="px-3">
+                          <FormGroup>
+                            <label className="label-key">EPIC Number</label>
+                            <p className="p-value">{this.state.profile.epicNumber}</p>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className="px-3">
+                          <FormGroup>
+                            <label className="label-key">Registered by {" "} {this.state.profile.idType === "aadhar" ? "Aadhar" : 'EPIC'} Number</label>
+                            <p className="p-value">{this.state.profile._id}</p>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className="px-3">
+                          <FormGroup>
+                            <label className="label-key">Name</label>
+                            <p className="p-value">{this.state.profile.name}</p>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className="px-3">
+                          <FormGroup>
+                            <label className="label-key">
+                              S.O. Name
+                            </label>
+                            <p className="p-value">{this.state.profile.soName}</p>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className="px-3">
+                          <FormGroup>
+                            <label className="label-key">ID Proof</label>
+                            <p className="p-value">{this.state.profile.idProof} </p>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className="px-3">
+                          <FormGroup>
+                            <label className="label-key">Mobile Number</label>
+                            <p className="p-value">
+                              {this.state.profile.mobileNumber}
+                            </p>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col className="px-3">
+                          <FormGroup>
+                            <label className="label-key">Address</label>
+                            <p className="p-value">{this.state.profile.pAddress}</p>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </Col>
+
+                    <Col md="4">
+                      <div className="card-user">
+                        <div style={{ padding: "60px 74px 60px 51px" }}>
+                          <QRCodeSVG
+                            value={this.state.address}
+                            size={256}
+                            style={{ height: "100%", maxWidth: "100%", width: "100%" }}
+                          />
+                        </div>
+                        <div>
+                          <div className="button-container digitalInk">
+                            DigitalInk
+                            <CopyToClipboard text={this.state.profile.address}
+                              onCopy={this.updateDigitalInk}>
+                              {
+                                this.state.copiedDigitalInk ?
+                                  <span className="copy-digitalInk"> <i className="nc-icon nc-check-2" /></span>
+                                  :
+                                  <span className="copy-digitalInk"> <i className="nc-icon nc-single-copy-04" /></span>
+                              }
+                            </CopyToClipboard>
+                          </div>
+                        </div>
+                        <div className="submit-btn-vote-container">
+                          <Button
+                            className="btn-round submit-btn-vote"
+                            color="primary"
+                            // type="submit"
+                            disabled={this.state.profile.isVoted ? true : false}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              this.props.history.push({
+                                pathname: "/candidates"
+                              })
+                            }}
+                          >
+                            {this.state.profile.isVoted ? "Already Voted" : "Vote"}
+                          </Button>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                </Form>
+              </CardBody>
+            </Card>
           </Row>
         </div >
       </>

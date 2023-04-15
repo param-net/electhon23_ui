@@ -10,3 +10,24 @@
 .digitalInk {
     font-weight: 600;
 }
+
+.card-user-profile {
+    width: 100%;
+    padding: 0%;
+    margin: 0%;
+}
+
+.submit-btn-vote-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5%;
+}
+.submit-btn-vote {
+    width: 60%;
+}
+
+.copy-digitalInk {
+    cursor: pointer;
+}
