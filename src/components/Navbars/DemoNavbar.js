@@ -46,6 +46,7 @@ function Header(props) {
   const location = useLocation();
   const history = useHistory();
   const logout = () => {
+    localStorage.removeItem('profile');
     history.push("/login")
   }
   const toggle = () => {
