@@ -98,7 +98,7 @@ class User extends React.Component {
                 let profile = JSON.parse(localStorage.getItem("profile"))
                 profile['isVoted'] = true
                 localStorage.setItem("profile", JSON.stringify(profile))
-                return this.notify('tr', "Vote Casted Successfully", 2)
+                return this.notify('tr', "Voted Successfully", 2)
             }
             return Promise.reject("Unable to Vote")
         }).catch(err => {
