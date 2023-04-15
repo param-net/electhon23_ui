@@ -19,14 +19,16 @@ class User extends React.Component {
             isModalOpen: false,
             selectedCandidateIndex: 0,
             isVoteModalOpen: false,
-            disableVote: false
+            disableVote: false,
+            profile: {}
         }
         this.notificationAlert = React.createRef();
     }
 
     componentDidMount() {
-        let profile = JSON.parse(localStorage.getItem("profile"))
-        let disableVote = profile && profile.isVoted ? profile.isVoted : false
+        let profile = JSON.parse(localStorage.getItem("profile"));
+        this.setState({ profile: profile })
+        let disableVote = profile && profile.isVoted ? profile.isVoted : false;
         return this.getCandidates().then(result => {
             if (!result && !result.message) {
                 this.notify('tr', "Unable to get the candidates", 3)
@@ -63,7 +65,7 @@ class User extends React.Component {
         })
     }
 
-    voteCandidate = (index) => {
+    voteCandidate = (cID) => {
         let profile = JSON.parse(localStorage.getItem("profile"))
         let address = profile && profile.address ? profile.address : ""
         let isAdminLogin = profile && profile.isAdmin ? true : false
@@ -76,10 +78,13 @@ class User extends React.Component {
          */
         let body = {
             "address": address,
-            "cID": ""
+            "cID": cID
         }
-        if (!isAdminLogin) {
-            body.cID = 2
+        // if (!isAdminLogin) {
+        //     body.cID = 2
+        // }
+        if (isAdminLogin) {
+            body.cID = 0
         }
         return fetch(url, {
             headers: {
@@ -97,7 +102,9 @@ class User extends React.Component {
                 this.setState({ disableVote: true })
                 let profile = JSON.parse(localStorage.getItem("profile"))
                 profile['isVoted'] = true
+                profile['cID'] = cID;
                 localStorage.setItem("profile", JSON.stringify(profile))
+                this.setState({ profile })
                 return this.notify('tr', "Voted Successfully", 2)
             }
             return Promise.reject("Unable to Vote")
@@ -215,27 +222,36 @@ class User extends React.Component {
                 <CardFooter>
                     <div className="button-container">
                         <Row>
-                            <Col lg="2" md="2"></Col>
-                            <Col className="ml-auto mr-auto" lg="4" md="4">
-                                <Button
-                                    className="btn-round"
-                                    color="primary"
+                            <Col className="ml-auto mr-auto" xs="6" sm="6" md="6" lg="6" xl="6">
+                                <text
+                                    className="viewprofile"
                                     onClick={() => this.showCandidateDetails(index)}
+                                    role="button"
                                 >
-                                    View
-                                </Button>
+                                    View Profile
+                                </text>
                             </Col>
-                            <Col className="ml-auto mr-auto" lg="4" md="4">
-                                <Button
-                                    className="btn-round"
-                                    color="primary"
-                                    onClick={() => this.voteCandidate(index)}
-                                    disabled={this.state.disableVote}
-                                >
-                                    Vote
-                                </Button>
+                            <Col className="ml-auto mr-auto" xs="6" sm="6" md="6" lg="6" xl="6">
+                                {
+                                    this.state.disableVote && candidate._id === this.state.profile.cID ?
+                                        "Voted"
+                                        :
+                                        this.state.disableVote && this.state.profile.cID === 0 ?
+                                            "Voted Offline"
+                                            :
+                                            this.state.disableVote ?
+                                                ""
+                                                :
+                                                <Button
+                                                    className="btn-round"
+                                                    color="primary"
+                                                    onClick={() => this.voteCandidate(candidate && candidate._id)}
+                                                //disabled={this.state.disableVote}
+                                                >
+                                                    Vote
+                                                </Button>
+                                }
                             </Col>
-                            <Col lg="2" md="2"></Col>
                         </Row>
                     </div>
                 </CardFooter>

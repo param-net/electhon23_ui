@@ -61,7 +61,7 @@ class VotersList extends React.Component {
          */
         let body = {
             "address": address,
-            "cID": ""
+            "cID": 0
         }
 
         return fetch(url, {
