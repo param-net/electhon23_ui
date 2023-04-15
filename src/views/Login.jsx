@@ -393,7 +393,7 @@ class Login extends Component {
           this.state.otpSent ?
             <FormGroup>
               <label>OTP</label>
-              <Input type="text" id="otp" name="otp" required onChange={this.handleInputChange} value={this.state.otp} />
+              <Input type="password" id="otp" name="otp" required onChange={this.handleInputChange} value={this.state.otp} />
             </FormGroup>
             :
             <></>
@@ -403,7 +403,7 @@ class Login extends Component {
           <Button
             className="btn-round submit-btn-custom"
             color="primary"
-            type="submit"
+          // type="submit"
           >
             {this.state.otpSent ? "Verify OTP" : "Send OTP"}
           </Button>
@@ -424,7 +424,7 @@ class Login extends Component {
           this.state.otpSent ?
             <FormGroup>
               <label>OTP</label>
-              <Input type="text" id="otp" name="otp" required onChange={this.handleInputChange} value={this.state.otp} />
+              <Input type="password" id="otp" name="otp" required onChange={this.handleInputChange} value={this.state.otp} />
             </FormGroup>
             :
             <></>
@@ -433,7 +433,7 @@ class Login extends Component {
           <Button
             className="btn-round submit-btn-custom"
             color="primary"
-            type="submit"
+          // type="submit"
           >
             {this.state.otpSent ? "Verify OTP" : "Send OTP"}
           </Button>
