@@ -17,7 +17,7 @@
 
 */
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -44,6 +44,10 @@ function Header(props) {
   const [color, setColor] = React.useState("transparent");
   const sidebarToggle = React.useRef();
   const location = useLocation();
+  const history = useHistory();
+  const logout = () => {
+    history.push("/login")
+  }
   const toggle = () => {
     if (isOpen) {
       setColor("transparent");
@@ -89,6 +93,8 @@ function Header(props) {
       sidebarToggle.current.classList.toggle("toggled");
     }
   }, [location]);
+  let profile = JSON.parse(localStorage.getItem("profile"))
+  let userName = profile && profile.name ? profile.name : ""
   return (
     // add or remove classes depending if we are on full-screen-maps page or not
     <Navbar
@@ -127,7 +133,7 @@ function Header(props) {
           <span className="navbar-toggler-bar navbar-kebab" />
         </NavbarToggler>
         <Collapse isOpen={isOpen} navbar className="justify-content-end">
-          <form>
+          {/* <form>
             <InputGroup className="no-border">
               <Input placeholder="Search..." />
               <InputGroupAddon addonType="append">
@@ -136,15 +142,15 @@ function Header(props) {
                 </InputGroupText>
               </InputGroupAddon>
             </InputGroup>
-          </form>
+          </form> */}
           <Nav navbar>
             <NavItem>
-              <Link to="#pablo" className="nav-link btn-magnify">
+              {/* <Link to="#pablo" className="nav-link btn-magnify">
                 <i className="nc-icon nc-layout-11" />
                 <p>
                   <span className="d-lg-none d-md-block">Stats</span>
                 </p>
-              </Link>
+              </Link> */}
             </NavItem>
             <Dropdown
               nav
@@ -152,25 +158,25 @@ function Header(props) {
               toggle={(e) => dropdownToggle(e)}
             >
               <DropdownToggle caret nav>
-                <i className="nc-icon nc-bell-55" />
+                <i className="nc-icon nc-single-02" />
                 <p>
                   <span className="d-lg-none d-md-block">Some Actions</span>
                 </p>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem tag="a">Action</DropdownItem>
-                <DropdownItem tag="a">Another Action</DropdownItem>
-                <DropdownItem tag="a">Something else here</DropdownItem>
+                <DropdownItem tag="a">{userName}</DropdownItem>
+                <DropdownItem tag="a" onClick={() => logout()}>LogOut</DropdownItem>
+                {/* <DropdownItem tag="a">Something else here</DropdownItem> */}
               </DropdownMenu>
             </Dropdown>
-            <NavItem>
+            {/* <NavItem>
               <Link to="#pablo" className="nav-link btn-rotate">
                 <i className="nc-icon nc-settings-gear-65" />
                 <p>
                   <span className="d-lg-none d-md-block">Account</span>
                 </p>
               </Link>
-            </NavItem>
+            </NavItem> */}
           </Nav>
         </Collapse>
       </Container>

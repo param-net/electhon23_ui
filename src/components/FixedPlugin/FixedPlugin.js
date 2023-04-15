@@ -32,9 +32,9 @@ function FixedPlugin(props) {
   return (
     <div className="fixed-plugin">
       <div className={classes}>
-        <div onClick={handleClick}>
+        {/* <div onClick={handleClick}>
           <i className="fa fa-cog fa-2x" />
-        </div>
+        </div> */}
         <ul className="dropdown-menu show">
           <li className="header-title">SIDEBAR BACKGROUND</li>
           <li className="adjustments-line">
