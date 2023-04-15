@@ -187,6 +187,9 @@ class Login extends Component {
   sendOtp = (e) => {
     e.preventDefault();
     let mobileNumber = this.state.mobileNumber;
+    if (!mobileNumber || mobileNumber.length < 10) {
+      return this.notify("Invalid User Input, should be atleast 10 characters", "danger");
+    }
 
     // clear profile and on successfull verification set profile
     localStorage.removeItem("profile");
