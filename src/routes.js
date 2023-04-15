@@ -63,9 +63,9 @@ var routes = [
     layout: "/admin"
   },
   {
-    path: "/user-page",
-    name: "User Profile",
-    icon: "nc-icon nc-single-02",
+    path: "/candidates",
+    name: "Vote",
+    icon: "nc-icon nc-tile-56",
     component: UserPage,
     layout: "/admin"
   },

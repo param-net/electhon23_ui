@@ -1,0 +1,254 @@
+[
+    {
+        "name": "John Doe",
+        "party": "Democratic Party",
+        "age": 45,
+        "experience": [
+            {
+                "position": "State Senator",
+                "from": "2010-01-01",
+                "to": "2018-12-31"
+            },
+            {
+                "position": "US Representative",
+                "from": "2019-01-01",
+                "to": "present"
+            }
+        ],
+        "agenda": [
+            {
+                "issue": "Healthcare",
+                "position": "Supports a Medicare for All system to ensure every American has access to affordable healthcare, and will work to lower prescription drug prices"
+            },
+            {
+                "issue": "Climate Change",
+                "position": "Believes in the urgent need to address climate change and supports transitioning to 100% clean energy by 2050"
+            },
+            {
+                "issue": "Criminal Justice Reform",
+                "position": "Supports comprehensive criminal justice reform to address systemic racism and reduce mass incarceration"
+            }
+        ],
+        "website": "https://johndoe.com",
+        "social_media": {
+            "twitter": "https://twitter.com/johndoe",
+            "facebook": "https://facebook.com/johndoe",
+            "instagram": "https://instagram.com/johndoe"
+        },
+        "assets": {
+            "cash": 100000,
+            "investments": 500000,
+            "real_estate": [
+                {
+                    "type": "primary_residence",
+                    "value": 1000000,
+                    "address": {
+                        "street": "123 Main St.",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                },
+                {
+                    "type": "rental_property",
+                    "value": 500000,
+                    "address": {
+                        "street": "456 Oak St.",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "name": "Joseph",
+        "party": "Freedom Party",
+        "age": 45,
+        "experience": [
+            {
+                "position": "State Senator",
+                "from": "2010-01-01",
+                "to": "2018-12-31"
+            },
+            {
+                "position": "US Representative",
+                "from": "2019-01-01",
+                "to": "present"
+            }
+        ],
+        "agenda": [
+            {
+                "issue": "Healthcare",
+                "position": "Supports a Medicare for All system to ensure every American has access to affordable healthcare, and will work to lower prescription drug prices"
+            },
+            {
+                "issue": "Climate Change",
+                "position": "Believes in the urgent need to address climate change and supports transitioning to 100% clean energy by 2050"
+            },
+            {
+                "issue": "Criminal Justice Reform",
+                "position": "Supports comprehensive criminal justice reform to address systemic racism and reduce mass incarceration"
+            }
+        ],
+        "website": "https://johndoe.com",
+        "social_media": {
+            "twitter": "https://twitter.com/johndoe",
+            "facebook": "https://facebook.com/johndoe",
+            "instagram": "https://instagram.com/johndoe"
+        },
+        "assets": {
+            "cash": 100000,
+            "investments": 500000,
+            "real_estate": [
+                {
+                    "type": "primary_residence",
+                    "value": 1000000,
+                    "address": {
+                        "street": "123 Main St.",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                },
+                {
+                    "type": "rental_property",
+                    "value": 500000,
+                    "address": {
+                        "street": "456 Oak St.",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "name": "Joseph",
+        "party": "Freedom Party",
+        "age": 45,
+        "experience": [
+            {
+                "position": "State Senator",
+                "from": "2010-01-01",
+                "to": "2018-12-31"
+            },
+            {
+                "position": "US Representative",
+                "from": "2019-01-01",
+                "to": "present"
+            }
+        ],
+        "agenda": [
+            {
+                "issue": "Healthcare",
+                "position": "Supports a Medicare for All system to ensure every American has access to affordable healthcare, and will work to lower prescription drug prices"
+            },
+            {
+                "issue": "Climate Change",
+                "position": "Believes in the urgent need to address climate change and supports transitioning to 100% clean energy by 2050"
+            },
+            {
+                "issue": "Criminal Justice Reform",
+                "position": "Supports comprehensive criminal justice reform to address systemic racism and reduce mass incarceration"
+            }
+        ],
+        "website": "https://johndoe.com",
+        "social_media": {
+            "twitter": "https://twitter.com/johndoe",
+            "facebook": "https://facebook.com/johndoe",
+            "instagram": "https://instagram.com/johndoe"
+        },
+        "assets": {
+            "cash": 100000,
+            "investments": 500000,
+            "real_estate": [
+                {
+                    "type": "primary_residence",
+                    "value": 1000000,
+                    "address": {
+                        "street": "123 Main St.",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                },
+                {
+                    "type": "rental_property",
+                    "value": 500000,
+                    "address": {
+                        "street": "456 Oak St.",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "name": "Joseph",
+        "party": "Freedom Party",
+        "age": 45,
+        "experience": [
+            {
+                "position": "State Senator",
+                "from": "2010-01-01",
+                "to": "2018-12-31"
+            },
+            {
+                "position": "US Representative",
+                "from": "2019-01-01",
+                "to": "present"
+            }
+        ],
+        "agenda": [
+            {
+                "issue": "Healthcare",
+                "position": "Supports a Medicare for All system to ensure every American has access to affordable healthcare, and will work to lower prescription drug prices"
+            },
+            {
+                "issue": "Climate Change",
+                "position": "Believes in the urgent need to address climate change and supports transitioning to 100% clean energy by 2050"
+            },
+            {
+                "issue": "Criminal Justice Reform",
+                "position": "Supports comprehensive criminal justice reform to address systemic racism and reduce mass incarceration"
+            }
+        ],
+        "website": "https://johndoe.com",
+        "social_media": {
+            "twitter": "https://twitter.com/johndoe",
+            "facebook": "https://facebook.com/johndoe",
+            "instagram": "https://instagram.com/johndoe"
+        },
+        "assets": {
+            "cash": 100000,
+            "investments": 500000,
+            "real_estate": [
+                {
+                    "type": "primary_residence",
+                    "value": 1000000,
+                    "address": {
+                        "street": "123 Main St.",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                },
+                {
+                    "type": "rental_property",
+                    "value": 500000,
+                    "address": {
+                        "street": "456 Oak St.",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                }
+            ]
+        }
+    }
+]

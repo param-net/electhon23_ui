@@ -252,7 +252,7 @@ class Login extends Component {
           <div className="image1"></div>
           <div className="image2"></div>
         </div>
-        <div className="content">
+        <div className="login-content">
           <div className='imageContainer2'>
             <div className="image3"></div>
           </div>
