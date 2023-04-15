@@ -261,11 +261,12 @@ class Login extends Component {
       return res && res.json()
     }).then((res) => {
       if (res && res.status && res.message && Object.keys(res.message).length) {
-        localStorage.setItem("profile", JSON.stringify(res.message));
-        this.notify("Successfully logged In", "success");
+        let message = Object.assign({}, res.message)
+        localStorage.setItem("profile", JSON.stringify(message));
         this.props.history.push({
           pathname: "/admin"
         })
+        this.notify("Successfully logged In", "success")
         return;
       } {
         this.notify("Failed to log In", "warning")

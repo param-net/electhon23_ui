@@ -38,8 +38,12 @@ class User extends React.Component {
 
     getCandidates = () => {
         let url = `${Config['api-services']}${Config['endpoints']['getAllCandidates']}`
+        let profile = JSON.parse(localStorage.getItem("profile"))
         let body = {
-            location: "Nipani"
+            location: ""
+        }
+        if (profile && profile.location) {
+            body.location = profile.location
         }
         return fetch(url, {
             headers: {
