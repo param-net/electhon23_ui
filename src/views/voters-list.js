@@ -133,10 +133,19 @@ class VotersList extends React.Component {
         this.notificationAlert.current.notificationAlert(options);
     };
 
+    getDigitalID = (address) => {
+        if (!address) {
+            return "-";
+        }
+        let digitalID = address.substring(address.length, 32).toUpperCase()
+        return digitalID;
+    }
+
     getTableHeaders = () => {
         return (
             <tr>
                 <th style={{ textAlign: "left" }}>Digital ID</th>
+                <th style={{ textAlign: "left" }}>EPIC Number</th>
                 <th style={{ textAlign: "left" }}>Name</th>
                 <th style={{ textAlign: "left" }}>Sur Name</th>
                 <th style={{ textAlign: "left" }}>Location</th>
@@ -151,7 +160,8 @@ class VotersList extends React.Component {
         }
         return (
             <tr>
-                <td style={{ textAlign: "left" }}>{voterDetails._id}</td>
+                <td style={{ textAlign: "left" }}>{this.getDigitalID(voterDetails.address)}</td>
+                <td style={{ textAlign: "left" }}>{voterDetails.epicNumber ? voterDetails.epicNumber.toUpperCase() : "-"}</td>
                 <td style={{ textAlign: "left" }}>{voterDetails.name}</td>
                 <td style={{ textAlign: "left" }}>{voterDetails.soName || ""}</td>
                 <td style={{ textAlign: "left" }}>{voterDetails.location || ""}</td>

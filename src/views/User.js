@@ -162,9 +162,11 @@ class User extends React.Component {
         })
     }
 
-    voteModal = () => {
+    voteModal = (index) => {
+        const { candidateDetails, selectedCandidate } = this.state;
         this.setState({
-            isVoteModalOpen: !this.state.isVoteModalOpen
+            isVoteModalOpen: !this.state.isVoteModalOpen,
+            selectedCandidate: candidateDetails[index] || selectedCandidate
         })
     }
 
@@ -439,7 +441,7 @@ class User extends React.Component {
                             <Button
                                 className="btn-round"
                                 color="primary"
-                                onClick={() => this.voteCandidate(selectedCandidateIndex)}
+                                onClick={() => this.voteModal(selectedCandidateIndex)}
                                 disabled={this.state.disableVote}
                             >
                                 Vote
@@ -499,6 +501,7 @@ class User extends React.Component {
                     isFooterEnabled={true}
                     modalConfirmed={this.modalConfirmed}
                     modalCancelled={this.modalCancelled}
+                    size={"md"}
                 />
             </>
         )

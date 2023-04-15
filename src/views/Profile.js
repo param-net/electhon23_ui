@@ -79,6 +79,10 @@ class Profile extends React.Component {
   }
 
   render() {
+    let qrString = JSON.stringify(this.state.profile)
+    qrString = JSON.parse(qrString)
+    delete qrString.privateKey;
+    qrString = JSON.stringify(qrString)
     return (
       <>
         <div className="content">
@@ -157,7 +161,7 @@ class Profile extends React.Component {
                       <div className="card-user">
                         <div style={{ padding: "60px 74px 60px 51px" }}>
                           <QRCodeSVG
-                            value={this.state.address}
+                            value={qrString}
                             size={256}
                             style={{ height: "100%", maxWidth: "100%", width: "100%" }}
                           />
@@ -177,20 +181,25 @@ class Profile extends React.Component {
                           </div>
                         </div>
                         <div className="submit-btn-vote-container">
-                          <Button
-                            className="btn-round submit-btn-vote"
-                            color="primary"
-                            // type="submit"
-                            disabled={this.state.profile.isVoted ? true : false}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              this.props.history.push({
-                                pathname: "/candidates"
-                              })
-                            }}
-                          >
-                            {this.state.profile.isVoted ? "Already Voted" : "Vote"}
-                          </Button>
+                          {
+                            this.state.profile.isVoted ?
+                              "Voted"
+                              :
+                              <Button
+                                className="btn-round submit-btn-vote"
+                                color="primary"
+                                // type="submit"
+                                disabled={this.state.profile.isVoted ? true : false}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  this.props.history.push({
+                                    pathname: "/candidates"
+                                  })
+                                }}
+                              >
+                                "Vote"
+                              </Button>
+                          }
                         </div>
                       </div>
                     </Col>
