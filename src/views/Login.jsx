@@ -69,21 +69,49 @@ class Login extends Component {
     return "ID Proof"
   }
 
-  handleSubmit = (e) => {
-
+  signUp = (e) => {
+    e.preventDefault();
     const type = this.state.addressProofType;
     const addressProof = this.state.addressProof;
     const idProof = this.state.idProofNumber;
     // make API Call
 
-    e.preventDefault()
+    return fetch("http://141.148.207.162:8000/register", {
+      method: "POST",
+      mode: "no-cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      //redirect: "follow",
+      // referrerPolicy: "no-referrer", 
+      body: JSON.stringify({
+        "type": type,
+        "addressProof": addressProof,
+        "idProof": idProof
+      }),
+    }).then((res) => {
+      debugger
+      return res && res.json()
+    }).then((res) => {
+      debugger
+    }).catch((err) => {
+      debugger
+      console.log(err);
+      return err;
+    })
+  }
+
+  signIn = () => {
+
   }
 
 
   renderSignUpForm = () => {
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.signUp}>
         <div className="form-group">
           <label className="form-label">Select Address Proof</label>
           <div className="radio-options">
@@ -198,7 +226,7 @@ class Login extends Component {
 
   renderSignInForm = () => {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.signIn}>
         <FormGroup>
           <label>Mobile Number</label>
           <Input type="text" id="idProofNumber" name="idProofNumber" required onChange={this.handleInputChange} />
