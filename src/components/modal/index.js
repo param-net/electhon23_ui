@@ -8,10 +8,10 @@ class Popup extends React.Component {
     }
 
     render() {
-        const { title, body, isOpen, toggle, isFooterEnabled, modalConfirmed, modalCancelled } = this.props;
+        const { title, body, isOpen, toggle, isFooterEnabled, modalConfirmed, modalCancelled, size } = this.props;
 
         return (
-            <Modal isOpen={isOpen} toggle={toggle} size="lg">
+            <Modal isOpen={isOpen} toggle={toggle} size={size ? size : "lg"}>
                 <ModalHeader toggle={toggle}>{title}</ModalHeader>
                 <ModalBody>{body}</ModalBody>
                 {

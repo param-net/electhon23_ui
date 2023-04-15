@@ -33,6 +33,8 @@ function Sidebar(props) {
   const activeRoute = (routeName) => {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
+  let profile = JSON.parse(localStorage.getItem("profile"))
+
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(sidebar.current, {
@@ -72,6 +74,9 @@ function Sidebar(props) {
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
           {props.routes.map((prop, key) => {
+            if (prop.path == "/voters" && !profile.isAdmin) {
+              return;
+            }
             return (
               <li
                 className={
