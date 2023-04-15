@@ -37,11 +37,21 @@ class Login extends Component {
     this.notificationAlert = React.createRef();
   }
 
+  componentDidMount() {
+    let profile = localStorage.getItem('profile');
+    profile = profile && JSON.parse(profile);
+    if (profile && Object.keys(profile).length) {
+      this.props.history.push({
+        pathname: '/profile'
+      })
+    }
+  }
+
   notify = (message, color) => {
     if (!message || !color) {
       return;
     }
-    var color = Math.floor(Math.random() * 5 + 1);
+    var color = color;
     var type = "primary";
     switch (color) {
       case 1:
@@ -208,6 +218,7 @@ class Login extends Component {
       if (res && res.status) {
         this.notify(res && res.message, "success")
         this.setState({ otpSent: true })
+        return
       } {
         this.notify(res && res.message, "warning")
         return;
