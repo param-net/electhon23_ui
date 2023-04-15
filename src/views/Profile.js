@@ -100,8 +100,7 @@ class Profile extends React.Component {
                     <Row>
                       <Col className="px-3">
                         <FormGroup>
-                          {/* <label>{this.state.profile.idType === "aadhar" ? "Aadhar" : 'EPIC'} Number</label> */}
-                          <label className="label-key">EPIC Number</label>
+                          <label className="label-key">{this.state.profile.idType === "aadhar" ? "Aadhar" : 'EPIC'} Number</label>
                           <p className="p-value">{this.state.profile._id}</p>
                         </FormGroup>
                       </Col>
