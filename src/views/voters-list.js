@@ -137,7 +137,7 @@ class VotersList extends React.Component {
         if (!address) {
             return "-";
         }
-        let digitalID = address.substring(address.length, 32)
+        let digitalID = address.substring(address.length, 32).toUpperCase()
         return digitalID;
     }
 

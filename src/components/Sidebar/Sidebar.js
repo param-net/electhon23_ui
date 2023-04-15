@@ -77,6 +77,9 @@ function Sidebar(props) {
             if (prop.path == "/voters" && !profile.isAdmin) {
               return;
             }
+            if (prop.path == "/candidates" && profile.isAdmin) {
+              return;
+            }
             return (
               <li
                 className={
