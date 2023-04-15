@@ -15,16 +15,7 @@ class VotersList extends React.Component {
     }
 
     componentDidMount() {
-        return this.getVotersList().then(result => {
-            if (result && result.message) {
-                this.setState({ voters: result.message })
-                return;
-            }
-            return Promise.reject("Unable to get the Voters List")
-        }).catch(err => {
-            console.error(err)
-            return this.notify('tr', "Unable to get the Voters List", 3)
-        })
+        return this.getVotersList()
     }
 
     getVotersList = () => {
@@ -47,6 +38,15 @@ class VotersList extends React.Component {
                 return response.json()
             }
             return Promise.reject(response.statusText)
+        }).then(result => {
+            if (result && result.message) {
+                this.setState({ voters: result.message })
+                return;
+            }
+            return Promise.reject("Unable to get the Voters List")
+        }).catch(err => {
+            console.error(err)
+            return this.notify('tr', "Unable to get the Voters List", 3)
         })
     }
 
@@ -136,12 +136,11 @@ class VotersList extends React.Component {
     getTableHeaders = () => {
         return (
             <tr>
-                <th>Digital ID</th>
-                <th>Name</th>
-                <th>Sur Name</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th></th>
+                <th style={{ textAlign: "left" }}>Digital ID</th>
+                <th style={{ textAlign: "left" }}>Name</th>
+                <th style={{ textAlign: "left" }}>Sur Name</th>
+                <th style={{ textAlign: "left" }}>Location</th>
+                <th style={{ textAlign: "center" }}>Status</th>
             </tr>
         )
     }
@@ -152,12 +151,12 @@ class VotersList extends React.Component {
         }
         return (
             <tr>
-                <td>{voterDetails._id}</td>
-                <td>{voterDetails.name}</td>
-                <td>{voterDetails.soName || ""}</td>
-                <td>{voterDetails.location || ""}</td>
-                <td>{voterDetails.isVoted ? "Voted" : "Not Voted"}</td>
-                <td>{!voterDetails.isVoted ? this.getVotingButton(voterDetails) : ""}</td>
+                <td style={{ textAlign: "left" }}>{voterDetails._id}</td>
+                <td style={{ textAlign: "left" }}>{voterDetails.name}</td>
+                <td style={{ textAlign: "left" }}>{voterDetails.soName || ""}</td>
+                <td style={{ textAlign: "left" }}>{voterDetails.location || ""}</td>
+                <td style={{ textAlign: "center" }}>{voterDetails.isVoted ? "Voted" : this.getVotingButton(voterDetails)}</td>
+
             </tr>
         )
     }
@@ -165,22 +164,22 @@ class VotersList extends React.Component {
     getVoters = () => {
         const { voters } = this.state;
 
-        return voters.map((value, key) => {
-            return (
-                <Table>
-                    <thead className="text-primary">
-                        {
-                            this.getTableHeaders()
-                        }
-                    </thead>
-                    <tbody>
-                        {
-                            this.getTableData(value)
-                        }
-                    </tbody>
-                </Table>
-            )
-        })
+        return (
+            <Table>
+                <thead className="text-primary">
+                    {
+                        this.getTableHeaders()
+                    }
+                </thead>
+                <tbody>
+                    {
+                        voters.map((value, key) => {
+                            return this.getTableData(value)
+                        })
+                    }
+                </tbody>
+            </Table>
+        )
     }
 
     render() {

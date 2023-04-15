@@ -23,6 +23,7 @@ import { Nav } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 
 import logo from "logo.svg";
+import eci from "../../assets/img/eci.jpg"
 
 var ps;
 
@@ -57,14 +58,15 @@ function Sidebar(props) {
           className="simple-text logo-mini"
         >
           <div className="logo-img">
-            <img src={logo} alt="react-logo" />
+            <img src={eci} alt="logo" />
           </div>
         </a>
         <a
           href="https://www.creative-tim.com"
           className="simple-text logo-normal"
+          onClick={(e) => e.preventDefault()}
         >
-          Creative Tim
+          Electhon 2023
         </a>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>

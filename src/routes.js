@@ -28,41 +28,86 @@ import UpgradeToPro from "views/Upgrade.js";
 import Profile from "views/Profile.js";
 import VotersList from "views/voters-list";
 
+// var routes = [
+//   {
+//     path: "/login",
+//     name: "Login",
+//     icon: "nc-icon nc-login",
+//     component: Login,
+//     layout: "/login"
+//   },
+//   {
+//     path: "/dashboard",
+//     name: "Dashboard",
+//     icon: "nc-icon nc-bank",
+//     component: Dashboard,
+//     layout: "/dashboard"
+//   },
+//   {
+//     path: "/icons",
+//     name: "Icons",
+//     icon: "nc-icon nc-diamond",
+//     component: Icons,
+//     layout: "/icons"
+//   },
+//   {
+//     path: "/maps",
+//     name: "Maps",
+//     icon: "nc-icon nc-pin-3",
+//     component: Maps,
+//     layout: "/maps"
+//   },
+//   {
+//     path: "/notifications",
+//     name: "Notifications",
+//     icon: "nc-icon nc-bell-55",
+//     component: Notifications,
+//     layout: "/notifications"
+//   },
+//   {
+//     path: "/candidates",
+//     name: "Vote",
+//     icon: "nc-icon nc-tile-56",
+//     component: UserPage,
+//     layout: "/candidates"
+//   },
+//   {
+//     path: "/voters",
+//     name: "Voters List",
+//     icon: "nc-icon nc-tile-56",
+//     component: VotersList,
+//     layout: "/admin"
+//   },
+//   {
+//     path: "/tables",
+//     name: "Table List",
+//     icon: "nc-icon nc-tile-56",
+//     component: TableList,
+//     layout: "/tables"
+//   },
+//   {
+//     path: "/profile",
+//     name: "Profile",
+//     icon: "nc-icon nc-single-02",
+//     component: Profile,
+//     layout: "/profile"
+//   }
+// ];
+
 var routes = [
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   icon: "nc-icon nc-login",
+  //   component: Login,
+  //   layout: "/login"
+  // },
   {
-    path: "/login",
-    name: "Login",
-    icon: "nc-icon nc-login",
-    component: Login,
-    layout: "/login"
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-bank",
-    component: Dashboard,
-    layout: "/dashboard"
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-diamond",
-    component: Icons,
-    layout: "/icons"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/maps"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/notifications"
+    path: "/profile",
+    name: "Profile",
+    icon: "nc-icon nc-single-02",
+    component: Profile,
+    layout: "/profile"
   },
   {
     path: "/candidates",
@@ -77,20 +122,6 @@ var routes = [
     icon: "nc-icon nc-tile-56",
     component: VotersList,
     layout: "/admin"
-  },
-  {
-    path: "/tables",
-    name: "Table List",
-    icon: "nc-icon nc-tile-56",
-    component: TableList,
-    layout: "/tables"
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    icon: "nc-icon nc-single-02",
-    component: Profile,
-    layout: "/profile"
   }
-];
+]
 export default routes;
