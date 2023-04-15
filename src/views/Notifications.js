@@ -35,6 +35,7 @@ import {
 
 function Notifications() {
   const notificationAlert = React.useRef();
+
   const notify = (place) => {
     var color = Math.floor(Math.random() * 5 + 1);
     var type;
