@@ -25,6 +25,7 @@ import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
+import Profile from "views/Profile.js";
 
 var routes = [
   {
@@ -39,57 +40,49 @@ var routes = [
     name: "Dashboard",
     icon: "nc-icon nc-bank",
     component: Dashboard,
-    layout: "/admin"
+    layout: "/dashboard"
   },
   {
     path: "/icons",
     name: "Icons",
     icon: "nc-icon nc-diamond",
     component: Icons,
-    layout: "/admin"
+    layout: "/icons"
   },
   {
     path: "/maps",
     name: "Maps",
     icon: "nc-icon nc-pin-3",
     component: Maps,
-    layout: "/admin"
+    layout: "/maps"
   },
   {
     path: "/notifications",
     name: "Notifications",
     icon: "nc-icon nc-bell-55",
     component: Notifications,
-    layout: "/admin"
+    layout: "/notifications"
   },
   {
     path: "/candidates",
     name: "Vote",
     icon: "nc-icon nc-tile-56",
     component: UserPage,
-    layout: "/admin"
+    layout: "/candidates"
   },
   {
     path: "/tables",
     name: "Table List",
     icon: "nc-icon nc-tile-56",
     component: TableList,
-    layout: "/admin"
+    layout: "/tables"
   },
   {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-caps-small",
-    component: Typography,
-    layout: "/admin"
-  },
-  {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "nc-icon nc-spaceship",
-    component: UpgradeToPro,
-    layout: "/admin"
+    path: "/profile",
+    name: "Profile",
+    icon: "nc-icon nc-single-02",
+    component: Profile,
+    layout: "/profile"
   }
 ];
 export default routes;

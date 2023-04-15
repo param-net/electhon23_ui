@@ -264,7 +264,7 @@ class Login extends Component {
         let message = Object.assign({}, res.message)
         localStorage.setItem("profile", JSON.stringify(message));
         this.props.history.push({
-          pathname: "/admin"
+          pathname: "/profile"
         })
         this.notify("Successfully logged In", "success")
         return;
@@ -457,7 +457,7 @@ class Login extends Component {
               <div className="image3"></div>
             </div>
             <div className="header">
-              <h2 className='header-text'>Welcome to Digital Ink </h2>
+              <h2 className='header-text'>Welcome to DigitalInk </h2>
             </div>
             <div className="login">
               <div className="tab-header">

@@ -34,8 +34,14 @@ root.render(
   <BrowserRouter>
     <Switch>
       <Route path="/login" render={(props) => <Login {...props} />} />
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      {/* <Redirect to="/login" /> */}
+      <Route path="/dashboard" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/icons" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/maps" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/candidates" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/notifications" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/candidates" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/tables" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/profile" render={(props) => <AdminLayout {...props} />} />
     </Switch>
   </BrowserRouter>
 );

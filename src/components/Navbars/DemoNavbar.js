@@ -58,7 +58,7 @@ function Header(props) {
   const getBrand = () => {
     let brandName = "Default Brand";
     routes.map((prop, key) => {
-      if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
+      if (window.location.href.indexOf(prop.path) !== -1) {
         brandName = prop.name;
       }
       return null;
@@ -102,7 +102,7 @@ function Header(props) {
         props.location.pathname.indexOf("full-screen-maps") !== -1
           ? "navbar-absolute fixed-top"
           : "navbar-absolute fixed-top " +
-            (color === "transparent" ? "navbar-transparent " : "")
+          (color === "transparent" ? "navbar-transparent " : "")
       }
     >
       <Container fluid>
