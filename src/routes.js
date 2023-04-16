@@ -27,6 +27,7 @@ import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 import Profile from "views/Profile.js";
 import VotersList from "views/voters-list";
+import Registration from "views/Registration";
 
 // var routes = [
 //   {
@@ -121,6 +122,13 @@ var routes = [
     name: "Voters List",
     icon: "nc-icon nc-tile-56",
     component: VotersList,
+    layout: "/admin"
+  },
+  {
+    path: "/registrations",
+    name: "Registration List",
+    icon: "nc-icon nc-tile-56",
+    component: Registration,
     layout: "/admin"
   }
 ]
