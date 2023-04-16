@@ -448,7 +448,7 @@ class User extends React.Component {
                                 className="btn-round"
                                 color="primary"
                                 onClick={() => this.voteModal(selectedCandidateIndex)}
-                                disabled={this.state.disableVote}
+                                disabled={this.state.disableVote || !this.state.profile.isVerified}
                             >
                                 Vote
                             </Button>
