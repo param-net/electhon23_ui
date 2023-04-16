@@ -121,7 +121,7 @@ class Registration extends React.Component {
                         Approve
                     </Button>
                 </Col>
-                <Col lg="1" md="2"></Col>
+                <Col lg="2" md="2"></Col>
                 <Col lg="2" md="4">
                     <Button
                         className="btn-round"
@@ -140,11 +140,15 @@ class Registration extends React.Component {
         return (
             <tr>
                 <th style={{ textAlign: "left" }}>Digital ID</th>
-                <th style={{ textAlign: "left" }}>Aadhar Number</th>
+                <th style={{ textAlign: "left" }}>Aadhar No</th>
                 <th style={{ textAlign: "left" }}>Name</th>
                 <th style={{ textAlign: "left" }}>Sur Name</th>
-                <th style={{ textAlign: "left" }}>Location</th>
-                <th style={{ textAlign: "left" }}>Address</th>
+                <th style={{ textAlign: "left" }}>DOB</th>
+                {/* <th style={{ textAlign: "left" }}>Location</th> */}
+                <th style={{ textAlign: "left" }}>PAddress</th>
+                <th style={{ textAlign: "left" }}>IDProof</th>
+                <th style={{ textAlign: "left" }}>Mobile No</th>
+                {/* <th style={{ textAlign: "left" }}>Address</th> */}
                 <th style={{ textAlign: "left" }}>City</th>
                 <th style={{ textAlign: "left" }}>State</th>
                 {
@@ -165,8 +169,12 @@ class Registration extends React.Component {
                 <td style={{ textAlign: "left" }}>{registrationDetails.metaData && registrationDetails.metaData.aadharcardnumber ? registrationDetails.metaData.aadharcardnumber : "-"}</td>
                 <td style={{ textAlign: "left" }}>{registrationDetails.name || "-"}</td>
                 <td style={{ textAlign: "left" }}>{registrationDetails.soName || "-"}</td>
-                <td style={{ textAlign: "left" }}>{registrationDetails.location || "-"}</td>
-                <td style={{ textAlign: "left" }}>{registrationDetails.metaData && registrationDetails.metaData.residentialaddress ? registrationDetails.metaData.residentialaddress : "-"}</td>
+                <td style={{ textAlign: "left" }}>{registrationDetails.metaData && registrationDetails.metaData.dob ? registrationDetails.metaData.dob : "-"}</td>
+                {/* <td style={{ textAlign: "left" }}>{registrationDetails.location || "-"}</td> */}
+                <td style={{ textAlign: "left" }}>{registrationDetails.pAddress || "-"}</td>
+                <td style={{ textAlign: "left" }}>{registrationDetails.idProof || "-"}</td>
+                <td style={{ textAlign: "left" }}>{registrationDetails.mobileNumber || "-"}</td>
+                {/* <td style={{ textAlign: "left" }}>{registrationDetails.metaData && registrationDetails.metaData.residentialaddress ? registrationDetails.metaData.residentialaddress : "-"}</td> */}
                 <td style={{ textAlign: "left" }}>{registrationDetails.metaData && registrationDetails.metaData.city ? registrationDetails.metaData.city : "-"}</td>
                 <td style={{ textAlign: "left" }}>{registrationDetails.metaData && registrationDetails.metaData.state ? registrationDetails.metaData.state : "-"}</td>
                 <td style={{ textAlign: "center" }}>{activeTab == "Pending" ? this.getActionButtons(registrationDetails) : ""}</td>
