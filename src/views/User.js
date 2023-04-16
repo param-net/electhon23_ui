@@ -105,6 +105,13 @@ class User extends React.Component {
                 profile['cID'] = cID;
                 localStorage.setItem("profile", JSON.stringify(profile))
                 this.setState({ profile })
+                if (result.message == "Already Voted") {
+                    this.notify('tr', result.message, 3)
+                    this.history.push({
+                        pathname: "/login"
+                    })
+                    return;
+                }
                 return this.notify('tr', "Voted Successfully", 2)
             }
             return Promise.reject("Unable to Vote")
@@ -174,7 +181,8 @@ class User extends React.Component {
         this.setState({
             isVoteModalOpen: !this.state.isVoteModalOpen
         })
-        return this.voteCandidate(this.state.selectedCandidateIndex)
+        const { selectedCandidate } = this.state
+        return this.voteCandidate(selectedCandidate._id)
     }
 
     modalCancelled = () => {
@@ -247,7 +255,8 @@ class User extends React.Component {
                                                 <Button
                                                     className="btn-round"
                                                     color="primary"
-                                                    onClick={() => this.voteCandidate(candidate && candidate._id)}
+                                                    // onClick={() => this.voteCandidate(candidate && candidate._id)}
+                                                    onClick={() => this.voteModal(index)}
                                                 //disabled={this.state.disableVote}
                                                 >
                                                     Vote

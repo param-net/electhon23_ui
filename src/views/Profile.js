@@ -197,7 +197,7 @@ class Profile extends React.Component {
                                   })
                                 }}
                               >
-                                "Vote"
+                                Vote
                               </Button>
                           }
                         </div>
