@@ -191,7 +191,7 @@ class Login extends Component {
       return { status: false, data: {} }
     }
     data = {
-      _id: "",
+      _id: formIdProof,
       name: firstname + " " + lastname,
       soName: sonof,
       pAddress: residentialaddress,
@@ -223,7 +223,7 @@ class Login extends Component {
     const type = this.state.addressProofType;
     const addressProof = this.state.addressProof;
     const idProof = this.state.idProofNumber;
-
+    let api = ""
     let body = {
       type: type,
       addressProof: "",
@@ -236,6 +236,7 @@ class Login extends Component {
       }
       body['addressProof'] = addressProof;
       body["idProof"] = idProof;
+      api = `${config["api-services"]}register`
     }
 
     if (type === "epic") {
@@ -243,6 +244,7 @@ class Login extends Component {
         return this.notify("Invalid EPIC Number length", "danger");
       }
       body['addressProof'] = addressProof;
+      api = `${config["api-services"]}register`
     }
 
     if (type === "form6") {
@@ -250,13 +252,14 @@ class Login extends Component {
       if (!status) {
         return this.notify("Invalid form details, check the filled details and try", "danger");
       }
+      api = `${config["api-services"]}register/form6`
       body = Object.assign({}, data)
     }
 
     // clear profile and on successfull verification set profile
     localStorage.removeItem("profile");
 
-    return fetch(`${config["api-services"]}register`, {
+    return fetch(api, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -329,6 +332,9 @@ class Login extends Component {
         let subMobileNumber = mobileNumber;
         subMobileNumber = subMobileNumber && subMobileNumber.substring(0, 3);
         mobileNumber = mobileNumber + subMobileNumber;
+      }
+      if (this.state.addressProofType === "form6") {
+        mobileNumber = this.state.formIdProof;
       }
     }
     // validation while signin

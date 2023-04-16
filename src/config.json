@@ -1,5 +1,5 @@
 {
-    "api-services": "http://141.148.207.162:8000/",
+    "api-services": "http://141.148.207.162:8001/",
     "endpoints": {
         "getAllCandidates": "candidates",
         "vote": "voter/vote",
