@@ -74,7 +74,7 @@ function Sidebar(props) {
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
           {props.routes.map((prop, key) => {
-            if (prop.path == "/voters" && !profile.isAdmin) {
+            if ((prop.path == "/voters" || prop.path == "/registrations") && !profile.isAdmin) {
               return;
             }
             if (prop.path == "/candidates" && profile.isAdmin) {

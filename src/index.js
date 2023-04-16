@@ -38,6 +38,7 @@ root.render(
       <Route path="/icons" render={(props) => <AdminLayout {...props} />} />
       <Route path="/maps" render={(props) => <AdminLayout {...props} />} />
       <Route path="/voters" render={(props) => <AdminLayout {...props} />} />
+      <Route path="/registrations" render={(props) => <AdminLayout {...props} />} />
       <Route path="/notifications" render={(props) => <AdminLayout {...props} />} />
       <Route path="/candidates" render={(props) => <AdminLayout {...props} />} />
       <Route path="/tables" render={(props) => <AdminLayout {...props} />} />

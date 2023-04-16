@@ -156,53 +156,56 @@ class Profile extends React.Component {
                         </Col>
                       </Row>
                     </Col>
-
-                    <Col md="4">
-                      <div className="card-user">
-                        <div style={{ padding: "60px 74px 60px 51px" }}>
-                          <QRCodeSVG
-                            value={qrString}
-                            size={256}
-                            style={{ height: "100%", maxWidth: "100%", width: "100%" }}
-                          />
-                        </div>
-                        <div>
-                          <div className="button-container digitalInk">
-                            DigitalInk
-                            <CopyToClipboard text={this.state.profile.address}
-                              onCopy={this.updateDigitalInk}>
+                    {
+                      !this.state.profile.isVerified ? <></>
+                        :
+                        <Col md="4">
+                          <div className="card-user">
+                            <div style={{ padding: "60px 74px 60px 51px" }}>
+                              <QRCodeSVG
+                                value={qrString}
+                                size={256}
+                                style={{ height: "100%", maxWidth: "100%", width: "100%" }}
+                              />
+                            </div>
+                            <div>
+                              <div className="button-container digitalInk">
+                                DigitalInk
+                                <CopyToClipboard text={this.state.profile.address}
+                                  onCopy={this.updateDigitalInk}>
+                                  {
+                                    this.state.copiedDigitalInk ?
+                                      <span className="copy-digitalInk"> <i className="nc-icon nc-check-2" /></span>
+                                      :
+                                      <span className="copy-digitalInk"> <i className="nc-icon nc-single-copy-04" /></span>
+                                  }
+                                </CopyToClipboard>
+                              </div>
+                            </div>
+                            <div className="submit-btn-vote-container">
                               {
-                                this.state.copiedDigitalInk ?
-                                  <span className="copy-digitalInk"> <i className="nc-icon nc-check-2" /></span>
+                                this.state.profile.isVoted ?
+                                  "Voted"
                                   :
-                                  <span className="copy-digitalInk"> <i className="nc-icon nc-single-copy-04" /></span>
+                                  <Button
+                                    className="btn-round submit-btn-vote"
+                                    color="primary"
+                                    // type="submit"
+                                    disabled={this.state.profile.isVoted ? true : false}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      this.props.history.push({
+                                        pathname: "/candidates"
+                                      })
+                                    }}
+                                  >
+                                    Vote
+                                  </Button>
                               }
-                            </CopyToClipboard>
+                            </div>
                           </div>
-                        </div>
-                        <div className="submit-btn-vote-container">
-                          {
-                            this.state.profile.isVoted ?
-                              "Voted"
-                              :
-                              <Button
-                                className="btn-round submit-btn-vote"
-                                color="primary"
-                                // type="submit"
-                                disabled={this.state.profile.isVoted ? true : false}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  this.props.history.push({
-                                    pathname: "/candidates"
-                                  })
-                                }}
-                              >
-                                "Vote"
-                              </Button>
-                          }
-                        </div>
-                      </div>
-                    </Col>
+                        </Col>
+                    }
                   </Row>
                 </Form>
               </CardBody>

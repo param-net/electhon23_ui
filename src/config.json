@@ -3,6 +3,8 @@
     "endpoints": {
         "getAllCandidates": "candidates",
         "vote": "voter/vote",
-        "voters-list": "voter/list"
+        "voters-list": "voter/list",
+        "register": "register",
+        "updateRegister": "register/updateStatus"
     }
 }

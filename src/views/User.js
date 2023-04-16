@@ -5,6 +5,7 @@ import fbLogin from '../assets/icons/nucleo-social-icons/svg/social-1_round-face
 import twitterLogin from '../assets/icons/nucleo-social-icons/svg/social-1_round-twitter.svg'
 import instaLogin from '../assets/icons/nucleo-social-icons/svg/social-1_round-instagram.svg'
 import './user.scss';
+// import { Spinner } from "reactstrap"
 import Config from '../config.json'
 import NotificationAlert from "react-notification-alert";
 
@@ -66,6 +67,7 @@ class User extends React.Component {
     }
 
     voteCandidate = (cID) => {
+        this.setState({ showLoader: true })
         let profile = JSON.parse(localStorage.getItem("profile"))
         let address = profile && profile.address ? profile.address : ""
         let isAdminLogin = profile && profile.isAdmin ? true : false
@@ -80,9 +82,7 @@ class User extends React.Component {
             "address": address,
             "cID": cID
         }
-        // if (!isAdminLogin) {
-        //     body.cID = 2
-        // }
+
         if (isAdminLogin) {
             body.cID = 0
         }
@@ -105,12 +105,18 @@ class User extends React.Component {
                 profile['cID'] = cID;
                 localStorage.setItem("profile", JSON.stringify(profile))
                 this.setState({ profile })
+                if (result.message == "Already voted") {
+                    this.notify('tr', result.message, 3)
+                    return;
+                }
                 return this.notify('tr', "Voted Successfully", 2)
             }
             return Promise.reject("Unable to Vote")
         }).catch(err => {
-            console.error(err)
-            return this.notify('tr', "Something Went Wrong", 3)
+            console.log(err)
+            return;
+        }).finally(() => {
+            this.setState({ showLoader: false })
         })
     }
 
@@ -174,7 +180,8 @@ class User extends React.Component {
         this.setState({
             isVoteModalOpen: !this.state.isVoteModalOpen
         })
-        return this.voteCandidate(this.state.selectedCandidateIndex)
+        const { selectedCandidate } = this.state
+        return this.voteCandidate(selectedCandidate._id)
     }
 
     modalCancelled = () => {
@@ -241,14 +248,13 @@ class User extends React.Component {
                                         this.state.disableVote && this.state.profile.cID === 0 ?
                                             "Voted Offline"
                                             :
-                                            this.state.disableVote ?
+                                            this.state.disableVote || !this.state.profile.isVerified ?
                                                 ""
                                                 :
                                                 <Button
                                                     className="btn-round"
                                                     color="primary"
-                                                    onClick={() => this.voteCandidate(candidate && candidate._id)}
-                                                //disabled={this.state.disableVote}
+                                                    onClick={() => this.voteModal(index)}
                                                 >
                                                     Vote
                                                 </Button>
@@ -257,7 +263,7 @@ class User extends React.Component {
                         </Row>
                     </div>
                 </CardFooter>
-            </Card>
+            </Card >
         )
     }
 
@@ -442,7 +448,7 @@ class User extends React.Component {
                                 className="btn-round"
                                 color="primary"
                                 onClick={() => this.voteModal(selectedCandidateIndex)}
-                                disabled={this.state.disableVote}
+                                disabled={this.state.disableVote || !this.state.profile.isVerified}
                             >
                                 Vote
                             </Button>
