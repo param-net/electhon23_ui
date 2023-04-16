@@ -157,7 +157,7 @@ class Profile extends React.Component {
                       </Row>
                     </Col>
                     {
-                      !this.state.profile.isVerified ? <></>
+                      this.state.profile.isVerified == 1 ? <></>
                         :
                         <Col md="4">
                           <div className="card-user">

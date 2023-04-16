@@ -43,6 +43,7 @@ root.render(
       <Route path="/candidates" render={(props) => <AdminLayout {...props} />} />
       <Route path="/tables" render={(props) => <AdminLayout {...props} />} />
       <Route path="/profile" render={(props) => <AdminLayout {...props} />} />
+      <Redirect to="/login" />
     </Switch>
   </BrowserRouter>
 );

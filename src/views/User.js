@@ -248,7 +248,7 @@ class User extends React.Component {
                                         this.state.disableVote && this.state.profile.cID === 0 ?
                                             "Voted Offline"
                                             :
-                                            this.state.disableVote || !this.state.profile.isVerified ?
+                                            this.state.disableVote || this.state.profile.isVerified !== 1 ?
                                                 ""
                                                 :
                                                 <Button
@@ -448,7 +448,7 @@ class User extends React.Component {
                                 className="btn-round"
                                 color="primary"
                                 onClick={() => this.voteModal(selectedCandidateIndex)}
-                                disabled={this.state.disableVote || !this.state.profile.isVerified}
+                                disabled={this.state.disableVote || this.state.profile.isVerified !== 1}
                             >
                                 Vote
                             </Button>
