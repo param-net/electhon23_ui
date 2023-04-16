@@ -18,6 +18,7 @@ import {
 
 import config from "../config.json"
 import NotificationAlert from "react-notification-alert";
+import Select from 'react-select'
 
 class Login extends Component {
   constructor(props) {
@@ -32,7 +33,20 @@ class Login extends Component {
 
       // OTP send and verify
       mobileNumber: "",
-      otp: ""
+      otp: "",
+
+      // form 6
+      state: "",
+      city: "",
+      location: "",
+      firstname: "",
+      lastname: "",
+      dob: "",
+      sonof: "",
+      mobilenumber2: "",
+      residentialaddress: "",
+      formIdProofType: "",
+      formIdProof: "",
     }
     this.notificationAlert = React.createRef();
   }
@@ -122,6 +136,9 @@ class Login extends Component {
     if (key === "otp" && value && value.length > 8) {
       return;
     }
+    if (key === "mobilenumber2" && value && value.length > 10) {
+      return;
+    }
     this.setState({ [key]: value })
   }
 
@@ -130,10 +147,12 @@ class Login extends Component {
     if (addressProofType === "aadhar") {
       return "Aadhar Card Number";
     }
+    if (addressProofType === "form6") {
+      return "Form 6";
+    }
     if (addressProofType === "epic") {
       return "EPIC Number"
     }
-    return "Address Proof"
   }
 
   idProofLabel = () => {
@@ -147,7 +166,56 @@ class Login extends Component {
     if (idProofType === "drivinglicense") {
       return "Driving License Number"
     }
-    return "ID Proof"
+  }
+
+  validForm6 = () => {
+    const {
+      state,
+      city,
+      location,
+      firstname,
+      lastname,
+      dob,
+      sonof,
+      formIdProofType,
+      formIdProof,
+      mobilenumber2,
+      residentialaddress
+    } = this.state;
+
+    let status = true;
+    let data = {};
+
+    if (!state || !city || !location || !firstname || !lastname || !dob || !sonof || !formIdProofType || !formIdProof || !mobilenumber2 || !residentialaddress) {
+      status = false;
+      return { status: false, data: {} }
+    }
+    data = {
+      _id: "",
+      name: firstname + " " + lastname,
+      soName: sonof,
+      pAddress: residentialaddress,
+      idProof: this.state.formIdProof,
+      idType: this.state.addressProofType,
+      mobileNumber: mobilenumber2,
+      location: location,
+      epicNumber: "",
+      metaData: {
+        state: state,
+        city: city,
+        location: location,
+        firstName: firstname,
+        lastName: lastname,
+        dob: dob,
+        sonOf: sonof,
+        idProofType: formIdProofType,
+        idProof: formIdProof,
+        mobileNumber: mobilenumber2,
+        residentialAddress: residentialaddress
+      }
+    }
+    status = true;
+    return { status, data };
   }
 
   signUp = (e) => {
@@ -156,12 +224,33 @@ class Login extends Component {
     const addressProof = this.state.addressProof;
     const idProof = this.state.idProofNumber;
 
-    if (type === "aadhar" && (!addressProof || addressProof.length < 12)) {
-      return this.notify("Invalid Aadhar Number length", "danger");
+    let body = {
+      type: type,
+      addressProof: "",
+      idProof: ""
     }
 
-    if (type === "epic" && (!addressProof || addressProof.length < 10)) {
-      return this.notify("Invalid EPIC Number length", "danger");
+    if (type === "aadhar") {
+      if (!addressProof || addressProof.length < 12) {
+        return this.notify("Invalid Aadhar Number length", "danger");
+      }
+      body['addressProof'] = addressProof;
+      body["idProof"] = idProof;
+    }
+
+    if (type === "epic") {
+      if (!addressProof || addressProof.length < 10) {
+        return this.notify("Invalid EPIC Number length", "danger");
+      }
+      body['addressProof'] = addressProof;
+    }
+
+    if (type === "form6") {
+      let { status, data } = this.validForm6()
+      if (!status) {
+        return this.notify("Invalid form details, check the filled details and try", "danger");
+      }
+      body = Object.assign({}, data)
     }
 
     // clear profile and on successfull verification set profile
@@ -172,11 +261,7 @@ class Login extends Component {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        "type": type,
-        "addressProof": addressProof,
-        "idProof": idProof
-      }),
+      body: JSON.stringify(body),
     }).then((res) => {
       return res && res.json()
     }).then((res) => {
@@ -291,10 +376,9 @@ class Login extends Component {
   }
 
 
-  renderSignUpForm = () => {
-
+  renderAddressProof = () => {
     return (
-      <form onSubmit={this.state.otpSent ? this.verifyOtp : this.signUp}>
+      <>
         <div className="form-group">
           <label className="form-label">Select Address Proof</label>
           <div className="radio-options">
@@ -315,6 +399,18 @@ class Login extends Component {
                 id="addressProofType"
                 type="radio"
                 name="addressProofType"
+                value="form6"
+                checked={this.state.addressProofType === 'form6'}
+                onChange={this.handleInputChange}
+                required={true}
+              />
+              <label className='radio-label'>Form 6</label>
+            </div>
+            <div className="radio-option">
+              <input
+                id="addressProofType"
+                type="radio"
+                name="addressProofType"
                 value="epic"
                 checked={this.state.addressProofType === 'epic'}
                 onChange={this.handleInputChange}
@@ -325,19 +421,30 @@ class Login extends Component {
           </div>
         </div>
 
-        <div className="form-group">
-          <label className="form-label">{this.addressProofLabel()}</label>
-          <input
-            id="addressProof"
-            type="text"
-            name="addressProof"
-            value={this.state.addressProof}
-            onChange={this.handleInputChange}
-            className="form-input"
-            required={true}
-          />
-        </div>
+        {
+          this.state.addressProofType === "form6" ?
+            <></>
+            :
+            <div className="form-group">
+              <label className="form-label">{this.addressProofLabel()}</label>
+              <input
+                id="addressProof"
+                type="text"
+                name="addressProof"
+                value={this.state.addressProof}
+                onChange={this.handleInputChange}
+                className="form-input"
+                required={true}
+              />
+            </div>
+        }
+      </>
+    )
+  }
 
+  renderIDProof = () => {
+    return (
+      <>
         {
           this.state.addressProofType === "aadhar" ?
             <>
@@ -397,8 +504,160 @@ class Login extends Component {
               </div>
             </>
             :
-            <></>
+            <>
+            </>
         }
+      </>
+    )
+  }
+
+  renderForm6 = () => {
+
+    return (
+      <>
+        {
+          this.state.addressProofType !== "form6" ?
+            <></>
+            :
+            <>
+              <h3 className='section-label'>Location</h3>
+              <div className="form-group">
+                <label className="form-label">State</label>
+                <Select options={[{ label: "Karnataka", value: "Karnataka" }]} onChange={(e) => this.setState({ state: e && e.value })} />
+              </div>
+              <div className="form-group">
+                <label className="form-label">City</label>
+                <Select options={[{ label: "Bengaluru", value: "Bengaluru" }]} onChange={(e) => this.setState({ city: e && e.value })} />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Location</label>
+                <Select options={[{ label: "Rajaji Nagar", value: "Rajaji Nagar" }, { label: "Athani", value: "Athani" }, { label: "Nippani", value: "Nippani" }]} onChange={(e) => this.setState({ location: e && e.value })} />
+              </div>
+
+              <h3 className='section-label'>Personal Details</h3>
+              <div className="form-group">
+                <label className="form-label">First Name</label>
+                <input
+                  id="firstname"
+                  type="text"
+                  name="firstname"
+                  value={this.state.firstname}
+                  onChange={this.handleInputChange}
+                  className="form-input"
+                  required={true}
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Last Name</label>
+                <input
+                  id="lastname"
+                  type="text"
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.handleInputChange}
+                  className="form-input"
+                  required={true}
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Date of Birth</label>
+                <input
+                  id="dob"
+                  type="text"
+                  name="dob"
+                  onChange={this.handleInputChange}
+                  className="form-input"
+                  required={true}
+                  value={this.state.dob}
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">S/O</label>
+                <input
+                  id="sonof"
+                  type="text"
+                  name="sonof"
+                  onChange={this.handleInputChange}
+                  className="form-input"
+                  required={true}
+                  value={this.state.sonof}
+                />
+              </div>
+
+              <h3 className='section-label'>Contact Details</h3>
+              <div className="form-group">
+                <label className="form-label">Mobile Number</label>
+                <input
+                  id="mobilenumber2"
+                  type="text"
+                  name="mobilenumber2"
+                  onChange={this.handleInputChange}
+                  className="form-input"
+                  required={true}
+                  value={this.state.mobilenumber2}
+                />
+              </div>
+
+              <h3 className='section-label'>Document for proof of residence</h3>
+              <div className="form-group">
+                <label className="form-label">Document Type</label>
+                <Select options={[{ label: "Aadhar Card", value: "aadharcard" }, { label: "PAN Card", value: "pancard" }, { label: "Passport", value: "passport" }, { label: "X Marksheet", value: "marksheet" }]} onChange={(e) => this.setState({ formIdProofType: e && e.value })} />
+              </div>
+              <div className="form-group">
+                <label className="form-label">{this.getLabelForSelectingFormIdProof()}</label>
+                <input
+                  id="formIdProof"
+                  type="text"
+                  name="formIdProof"
+                  onChange={this.handleInputChange}
+                  className="form-input"
+                  required={true}
+                  value={this.state.formIdProof}
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Residential Address</label>
+                <input
+                  id="residentialaddress"
+                  type="text"
+                  name="residentialaddress"
+                  onChange={this.handleInputChange}
+                  className="form-input"
+                  required={true}
+                  value={this.state.residentialaddress}
+                />
+              </div>
+            </>
+        }
+      </>
+    )
+  }
+
+  getLabelForSelectingFormIdProof = () => {
+    if (this.state.formIdProofType === "aadharcard") {
+      return "Aadhar Card Number";
+    }
+    if (this.state.formIdProofType === "pancard") {
+      return "PAN Card Number";
+    }
+    if (this.state.formIdProofType === "passport") {
+      return "Passport Number";
+    }
+    if (this.state.formIdProofType === "marksheet") {
+      return "X Enrollment Number";
+    }
+    return "Aadhar Card Number"
+
+  }
+
+
+  renderSignUpForm = () => {
+
+    return (
+      <form onSubmit={this.state.otpSent ? this.verifyOtp : this.signUp}>
+        {this.renderAddressProof()}
+        {this.renderIDProof()}
+        {this.renderForm6()}
 
         {
           this.state.otpSent ?
