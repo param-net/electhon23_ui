@@ -105,19 +105,16 @@ class User extends React.Component {
                 profile['cID'] = cID;
                 localStorage.setItem("profile", JSON.stringify(profile))
                 this.setState({ profile })
-                if (result.message == "Already Voted") {
+                if (result.message == "Already voted") {
                     this.notify('tr', result.message, 3)
-                    this.history.push({
-                        pathname: "/login"
-                    })
                     return;
                 }
                 return this.notify('tr', "Voted Successfully", 2)
             }
             return Promise.reject("Unable to Vote")
         }).catch(err => {
-            console.error(err)
-            return this.notify('tr', "Something Went Wrong", 3)
+            console.log(err)
+            return;
         })
     }
 
